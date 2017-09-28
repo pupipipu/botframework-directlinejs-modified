@@ -159,7 +159,7 @@ var DirectLine = /** @class */ (function () {
             .map(function (ajaxResponse) {
             //store the conversationId in the localStorage every connection start
             localStorage.setItem('currentConversationId', ajaxResponse.response.conversationId);
-            ajaxResponse.response;
+            return ajaxResponse.response;
         })
             .retryWhen(function (error$) {
             // for now we deem 4xx and 5xx errors as unrecoverable

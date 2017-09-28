@@ -407,7 +407,7 @@ export class DirectLine implements IBotConnection {
         .map(ajaxResponse => {
           //store the conversationId in the localStorage every connection start
           localStorage.setItem('currentConversationId', ajaxResponse.response.conversationId);
-          ajaxResponse.response as Conversation
+          return ajaxResponse.response as Conversation
         })
         .retryWhen(error$ =>
             // for now we deem 4xx and 5xx errors as unrecoverable
