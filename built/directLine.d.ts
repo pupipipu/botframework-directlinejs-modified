@@ -29,13 +29,6 @@ export interface Media {
     contentType: MediaType;
     contentUrl: string;
     name?: string;
-    thumbnailUrl?: string;
-}
-export interface UnknownMedia {
-    contentType: string;
-    contentUrl: string;
-    name?: string;
-    thumbnailUrl?: string;
 }
 export declare type CardActionTypes = "openUrl" | "imBack" | "postBack" | "playAudio" | "playVideo" | "showImage" | "downloadFile" | "signin" | "call";
 export interface CardAction {
@@ -44,18 +37,15 @@ export interface CardAction {
     value: any;
     image?: string;
 }
-export interface CardImage {
-    alt?: string;
-    url: string;
-    tap?: CardAction;
-}
 export interface HeroCard {
     contentType: "application/vnd.microsoft.card.hero";
     content: {
         title?: string;
         subtitle?: string;
         text?: string;
-        images?: CardImage[];
+        images?: {
+            url: string;
+        }[];
         buttons?: CardAction[];
         tap?: CardAction;
     };
@@ -66,7 +56,9 @@ export interface Thumbnail {
         title?: string;
         subtitle?: string;
         text?: string;
-        images?: CardImage[];
+        images?: {
+            url: string;
+        }[];
         buttons?: CardAction[];
         tap?: CardAction;
     };
@@ -82,7 +74,9 @@ export interface ReceiptItem {
     title?: string;
     subtitle?: string;
     text?: string;
-    image?: CardImage;
+    image?: {
+        url: string;
+    };
     price?: string;
     quantity?: string;
     tap?: CardAction;
@@ -98,7 +92,7 @@ export interface Receipt {
         items?: ReceiptItem[];
         tap?: CardAction;
         tax?: string;
-        vat?: string;
+        VAT?: string;
         total?: string;
         buttons?: CardAction[];
     };
@@ -109,7 +103,10 @@ export interface FlexCard {
         title?: string;
         subtitle?: string;
         text?: string;
-        images?: CardImage[];
+        images?: {
+            url: string;
+            tap?: CardAction;
+        }[];
         buttons?: CardAction[];
         aspect?: string;
     };
@@ -171,8 +168,7 @@ export interface AnimationCard {
         autostart?: boolean;
     };
 }
-export declare type KnownMedia = Media | HeroCard | Thumbnail | Signin | Receipt | AudioCard | VideoCard | AnimationCard | FlexCard | AdaptiveCard;
-export declare type Attachment = KnownMedia | UnknownMedia;
+export declare type Attachment = Media | HeroCard | Thumbnail | Signin | Receipt | AudioCard | VideoCard | AnimationCard | FlexCard | AdaptiveCard;
 export interface User {
     id: string;
     name?: string;

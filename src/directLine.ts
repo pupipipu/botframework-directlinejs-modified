@@ -40,15 +40,7 @@ export type MediaType = "image/png" | "image/jpg" | "image/jpeg" | "image/gif" |
 export interface Media {
     contentType: MediaType,
     contentUrl: string,
-    name?: string,
-    thumbnailUrl?: string
-}
-
-export interface UnknownMedia{
-    contentType: string,
-    contentUrl: string,
-    name?: string,
-    thumbnailUrl?: string
+    name?: string
 }
 
 export type CardActionTypes = "openUrl" | "imBack" | "postBack" | "playAudio" | "playVideo" | "showImage" | "downloadFile" | "signin" | "call";
@@ -60,19 +52,13 @@ export interface CardAction {
     image?: string
 }
 
-export interface CardImage {
-    alt?: string,
-    url: string,
-    tap?: CardAction
-}
-
 export interface HeroCard {
     contentType: "application/vnd.microsoft.card.hero",
     content: {
         title?: string,
         subtitle?: string,
         text?: string,
-        images?: CardImage[],
+        images?: { url: string }[],
         buttons?: CardAction[],
         tap?: CardAction
     }
@@ -84,7 +70,7 @@ export interface Thumbnail {
         title?: string,
         subtitle?: string,
         text?: string,
-        images?: CardImage[],
+        images?: { url: string }[],
         buttons?: CardAction[],
         tap?: CardAction
     }
@@ -102,7 +88,7 @@ export interface ReceiptItem {
     title?: string,
     subtitle?: string,
     text?: string,
-    image?: CardImage,
+    image?: { url: string },
     price?: string,
     quantity?: string,
     tap?: CardAction
@@ -116,7 +102,7 @@ export interface Receipt {
         items?: ReceiptItem[],
         tap?: CardAction,
         tax?: string,
-        vat?: string,
+        VAT?: string,
         total?: string,
         buttons?: CardAction[]
     }
@@ -129,7 +115,7 @@ export interface FlexCard {
         title?: string,
         subtitle?: string,
         text?: string,
-        images?: CardImage[],
+        images?: { url: string, tap?: CardAction }[],
         buttons?: CardAction[],
         aspect?: string
     }
@@ -181,8 +167,7 @@ export interface AnimationCard {
     }
 }
 
-export type KnownMedia = Media | HeroCard | Thumbnail | Signin | Receipt | AudioCard | VideoCard | AnimationCard | FlexCard | AdaptiveCard;
-export type Attachment = KnownMedia | UnknownMedia;
+export type Attachment = Media | HeroCard | Thumbnail | Signin | Receipt | AudioCard | VideoCard | AnimationCard | FlexCard | AdaptiveCard;
 
 export interface User {
     id: string,
@@ -405,7 +390,8 @@ export class DirectLine implements IBotConnection {
         })
 //      .do(ajaxResponse => konsole.log("conversation ajaxResponse", ajaxResponse.response))
         .map(ajaxResponse => {
-          //store the conversationId in the localStorage every connection start
+
+          //store conversationId in localStorage
           localStorage.setItem('currentConversationId', ajaxResponse.response.conversationId);
           return ajaxResponse.response as Conversation
         })
