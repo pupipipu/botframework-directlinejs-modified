@@ -391,7 +391,8 @@ export class DirectLine implements IBotConnection {
 //      .do(ajaxResponse => konsole.log("conversation ajaxResponse", ajaxResponse.response))
         .map(ajaxResponse => {
 
-          //store conversationId in localStorage
+          //store in both session and local storage
+          sessionStorage.setItem('currentConversationId', ajaxResponse.response.conversationId);
           localStorage.setItem('currentConversationId', ajaxResponse.response.conversationId);
           return ajaxResponse.response as Conversation
         })

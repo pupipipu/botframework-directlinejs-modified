@@ -157,7 +157,8 @@ var DirectLine = /** @class */ (function () {
             }
         })
             .map(function (ajaxResponse) {
-            //store conversationId in localStorage
+            //store in both session and local storage
+            sessionStorage.setItem('currentConversationId', ajaxResponse.response.conversationId);
             localStorage.setItem('currentConversationId', ajaxResponse.response.conversationId);
             return ajaxResponse.response;
         })
